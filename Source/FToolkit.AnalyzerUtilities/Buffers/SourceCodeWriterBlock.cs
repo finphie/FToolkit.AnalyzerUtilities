@@ -3,7 +3,7 @@
 /// <summary>
 /// ソースコードのブロックを表します。
 /// </summary>
-readonly ref struct SourceCodeWriterBlock : IDisposable
+public readonly ref struct SourceCodeWriterBlock : IDisposable
 {
     readonly SourceCodeWriter _writer;
 
@@ -25,5 +25,6 @@ readonly ref struct SourceCodeWriterBlock : IDisposable
     {
         _writer.DecreaseIndent();
         _writer.WriteLine(CloseBlock);
+        _writer.WriteLine();
     }
 }

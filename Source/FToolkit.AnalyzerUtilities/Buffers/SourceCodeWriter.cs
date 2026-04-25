@@ -6,7 +6,7 @@ namespace FToolkit.AnalyzerUtilities.Buffers;
 /// <summary>
 /// ソースコードを書き込むクラスです。
 /// </summary>
-sealed class SourceCodeWriter : IDisposable
+public sealed class SourceCodeWriter : IDisposable
 {
     const char Space = ' ';
     const int IndentSize = 4;

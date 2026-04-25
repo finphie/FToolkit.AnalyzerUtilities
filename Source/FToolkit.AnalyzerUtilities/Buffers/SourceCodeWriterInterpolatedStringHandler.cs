@@ -7,7 +7,7 @@ namespace FToolkit.AnalyzerUtilities.Buffers;
 /// <see cref="SourceCodeWriter"/>で使用する文字列補間ハンドラーです。
 /// </summary>
 [InterpolatedStringHandler]
-readonly ref struct SourceCodeWriterInterpolatedStringHandler
+public readonly ref struct SourceCodeWriterInterpolatedStringHandler
 {
     readonly SourceCodeWriter _writer;
 
