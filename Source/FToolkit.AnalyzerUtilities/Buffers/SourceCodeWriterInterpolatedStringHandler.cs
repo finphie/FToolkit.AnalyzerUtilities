@@ -7,17 +7,17 @@ namespace FToolkit.AnalyzerUtilities.Buffers;
 /// <see cref="SourceCodeWriter"/>で使用する文字列補間ハンドラーです。
 /// </summary>
 [InterpolatedStringHandler]
-readonly ref struct WriteInterpolatedStringHandler
+readonly ref struct SourceCodeWriterInterpolatedStringHandler
 {
     readonly SourceCodeWriter _writer;
 
     /// <summary>
-    /// <see cref="WriteInterpolatedStringHandler"/>の新しいインスタンスを生成します。
+    /// <see cref="SourceCodeWriterInterpolatedStringHandler"/>の新しいインスタンスを生成します。
     /// </summary>
     /// <param name="literalLength">定数文字の数</param>
     /// <param name="formattedCount">補間式の数</param>
     /// <param name="writer">ソースコードを書き込むクラスのインスタンス</param>
-    public WriteInterpolatedStringHandler(int literalLength, int formattedCount, SourceCodeWriter writer)
+    public SourceCodeWriterInterpolatedStringHandler(int literalLength, int formattedCount, SourceCodeWriter writer)
     {
         _ = literalLength;
         _ = formattedCount;

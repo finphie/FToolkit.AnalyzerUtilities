@@ -85,7 +85,7 @@ sealed class SourceCodeWriter : IDisposable
     /// 文字列を書き込みます。
     /// </summary>
     /// <param name="handler">文字列補間ハンドラー</param>
-    public void WriteLine([InterpolatedStringHandlerArgument("")] ref WriteInterpolatedStringHandler handler)
+    public void WriteLine([InterpolatedStringHandlerArgument("")] ref SourceCodeWriterInterpolatedStringHandler handler)
     {
         _ = handler;
         WriteLine();
@@ -116,7 +116,7 @@ sealed class SourceCodeWriter : IDisposable
     /// 文字列を書き込みます。
     /// </summary>
     /// <param name="handler">文字列補間ハンドラー</param>
-    public void Write([InterpolatedStringHandlerArgument("")] ref WriteInterpolatedStringHandler handler)
+    public void Write([InterpolatedStringHandlerArgument("")] ref SourceCodeWriterInterpolatedStringHandler handler)
     {
         _ = this;
         _ = handler;
