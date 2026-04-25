@@ -1,0 +1,42 @@
+<Project>
+  <!--
+    発行関連の設定
+    https://github.com/dotnet/runtime/pull/70941
+    https://github.com/dotnet/runtime/discussions/74940
+  -->
+
+  <ImportGroup Condition="'$(PublishMode)' == 'NativeAot'">
+    <Import Project="$(BuildCommonAnalyzersDirectory)Analyzers.Trimming.targets" />
+    <Import Project="$(BuildCommonPublishDirectory)NativeAot.props" />
+    <Import Project="$(BuildCommonPublishDirectory)Runtime.props" />
+    <Import Project="$(BuildCommonPublishDirectory)Trimming.props" />
+  </ImportGroup>
+
+  <ImportGroup Condition="'$(PublishMode)' == 'ReadyToRun'">
+    <Import Project="$(BuildCommonAnalyzersDirectory)Analyzers.Trimming.targets" />
+    <Import Project="$(BuildCommonPublishDirectory)Pgo.props" />
+    <Import Project="$(BuildCommonPublishDirectory)ReadyToRun.props" />
+    <Import Project="$(BuildCommonPublishDirectory)SelfContained.props" />
+    <Import Project="$(BuildCommonPublishDirectory)SingleFile.props" />
+    <Import Project="$(BuildCommonPublishDirectory)Runtime.props" />
+    <Import Project="$(BuildCommonPublishDirectory)Trimming.props" />
+  </ImportGroup>
+
+  <ImportGroup Condition="'$(PublishMode)' == 'ReadyToRunNoTrimming'">
+    <Import Project="$(BuildCommonPublishDirectory)Pgo.props" />
+    <Import Project="$(BuildCommonPublishDirectory)ReadyToRun.props" />
+    <Import Project="$(BuildCommonPublishDirectory)SelfContained.False.props" />
+    <Import Project="$(BuildCommonPublishDirectory)SingleFile.props" />
+    <Import Project="$(BuildCommonPublishDirectory)Runtime.props" />
+  </ImportGroup>
+
+  <ImportGroup Condition="'$(PublishMode)' == 'Trimming'">
+    <Import Project="$(BuildCommonAnalyzersDirectory)Analyzers.Trimming.targets" />
+    <Import Project="$(BuildCommonPublishDirectory)Trimming.props" />
+  </ImportGroup>
+
+  <ImportGroup Condition="'$(PublishMode)' == 'Tool'">
+    <Import Project="$(BuildCommonAnalyzersDirectory)Analyzers.Trimming.targets" />
+  </ImportGroup>
+
+</Project>

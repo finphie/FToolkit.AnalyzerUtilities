@@ -1,0 +1,34 @@
+<Project>
+  <!-- Blazor WebAssembly関連の設定 -->
+
+  <PropertyGroup>
+    <IsPublishable>true</IsPublishable>
+    <PublishMode>Trimming</PublishMode>
+
+    <!-- タイムゾーンサポートを無効にする。 -->
+    <BlazorEnableTimeZoneSupport>false</BlazorEnableTimeZoneSupport>
+
+    <!-- 照合順序情報を無効にする。 -->
+    <BlazorWebAssemblyPreserveCollationData>false</BlazorWebAssemblyPreserveCollationData>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' != 'Debug'">
+    <!-- Emscriptenコンパイラーの設定 -->
+    <EmccCompileOptimizationFlag>-O3</EmccCompileOptimizationFlag>
+    <EmccLinkOptimizationFlag>-O3</EmccLinkOptimizationFlag>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Aot)' == 'true'">
+    <!-- AOTコンパイルを有効にする。 -->
+    <RunAOTCompilation>true</RunAOTCompilation>
+
+    <!-- AOTコンパイル後に未使用のILを削除する。 -->
+    <WasmStripILAfterAOT>true</WasmStripILAfterAOT>
+
+    <!-- SIMDサポートを有効にする。 -->
+    <WasmEnableSIMD>true</WasmEnableSIMD>
+  </PropertyGroup>
+
+  <Import Project="$(BuildCommonPublishDirectory)Publish.props" />
+
+</Project>

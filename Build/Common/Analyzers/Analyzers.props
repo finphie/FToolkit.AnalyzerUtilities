@@ -1,0 +1,11 @@
+<Project>
+  <!-- アナライザー関連の設定 -->
+
+  <PropertyGroup>
+    <NoWarn>$(NoWarn);SA0001</NoWarn>
+    <AnalysisLevel>preview</AnalysisLevel>
+    <AnalysisMode>All</AnalysisMode>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+  </PropertyGroup>
+
+</Project>

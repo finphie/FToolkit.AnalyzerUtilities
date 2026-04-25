@@ -1,0 +1,28 @@
+<Project>
+  <!--
+    Android関連の設定
+    https://learn.microsoft.com/xamarin/android/deploy-test/building-apps/build-properties
+  -->
+
+  <PropertyGroup>
+    <IsPublishable>true</IsPublishable>
+
+    <PublishMode>NativeAot</PublishMode>
+    <EnableReflection>true</EnableReflection>
+
+    <!-- versionCodeを指定する。 -->
+    <ApplicationVersion>$(MajorVersion)$(MinorVersion)$(BuildVersion)</ApplicationVersion>
+
+    <!-- minSdkVersionを指定する。 -->
+    <SupportedOSPlatformVersion>28</SupportedOSPlatformVersion>
+
+    <!-- CoreCLRを有効にする。 -->
+    <UseMonoRuntime>false</UseMonoRuntime>
+
+    <!-- HttpMessageHandlerの既定のプラットフォーム実装を使用し、マネージド実装を削除する。 -->
+    <UseNativeHttpHandler>true</UseNativeHttpHandler>
+  </PropertyGroup>
+
+  <Import Project="$(BuildCommonPublishDirectory)Publish.props" />
+
+</Project>

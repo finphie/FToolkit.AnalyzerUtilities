@@ -1,0 +1,20 @@
+version: 2
+updates:
+  - package-ecosystem: nuget
+    directory: /
+    open-pull-requests-limit: 99
+    schedule:
+      interval: daily
+    cooldown:
+      default-days: 7
+    labels:
+      - dependencies
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: daily
+    cooldown:
+      default-days: 7
+    labels:
+      - dependencies

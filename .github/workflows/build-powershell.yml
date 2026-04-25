@@ -1,0 +1,16 @@
+name: Build(PowerShell)
+
+on:
+  pull_request:
+    paths:
+      - '**/*.ps1'
+      - '**/*.psd1'
+      - '**/*.psm1'
+
+permissions: {}
+
+jobs:
+  main:
+    name: Main
+    uses: finphie/Actions/.github/workflows/build-powershell.yml@main
+    permissions: {}

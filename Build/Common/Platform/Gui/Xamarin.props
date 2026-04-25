@@ -1,0 +1,12 @@
+<Project>
+  <!-- Xamarin関連の設定 -->
+
+  <PropertyGroup>
+    <ApplicationId>net.$(Authors).$(MSBuildProjectName.ToLower())</ApplicationId>
+  </PropertyGroup>
+
+  <Target Name="_CheckApplicationTitle" BeforeTargets="PrepareForBuild">
+    <Error Condition="'$(ApplicationTitle)' == ''" Text="ApplicationTitle is required." />
+  </Target>
+
+</Project>

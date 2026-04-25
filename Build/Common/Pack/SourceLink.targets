@@ -1,0 +1,15 @@
+<Project>
+  <!--
+    ソースリンク関連の設定
+    https://github.com/dotnet/sourcelink
+  -->
+
+  <PropertyGroup>
+    <!--
+      .NET SDKではPublishRepositoryUrlは設定されない。
+      https://github.com/dotnet/sourcelink/issues/1203
+    -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+  </PropertyGroup>
+
+</Project>

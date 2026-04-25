@@ -1,0 +1,28 @@
+<Project>
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+
+  <PropertyGroup>
+    <_IsTest>$(MSBuildProjectName.EndsWith('Tests'))</_IsTest>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(_IsTest)' == 'true'">
+    <!--
+      [SA0001]
+      All diagnostics of XML documentation comments has been disabled due to the current project configuration.
+      https://github.com/DotNetAnalyzers/StyleCopAnalyzers/blob/master/documentation/SA0001.md
+      理由: テストプロジェクトではドキュメンテーションコメントは必要ない。
+    -->
+    <NoWarn>$(NoWarn);SA0001</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(_IsTest)' == 'true'">
+    <PackageReference Include="Shouldly" />
+    <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" />
+    <PackageReference Include="xunit.v3.mtp-v2" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(_IsTest)' != 'true'">
+    <PackageReference Include="xunit.v3.extensibility.core" />
+  </ItemGroup>
+
+</Project>

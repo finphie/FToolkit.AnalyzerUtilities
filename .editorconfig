@@ -1,0 +1,67 @@
+root = true
+
+# 全てのファイル
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 4
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# C#関連ファイル
+[*.{cs,tt,xaml,axaml,razor,cshtml,sln}]
+charset = utf-8-bom
+end_of_line = crlf
+
+# リソースファイル
+[*.resx]
+end_of_line = crlf
+indent_size = 2
+
+# Visual Studio ソリューションファイル
+[*.sln]
+indent_style = tab
+
+# Visual Studio XML ソリューションファイル
+[*.slnx]
+end_of_line = crlf
+indent_size = 2
+
+# Visual Studioプロジェクトファイル
+# .csprojは、EditorConfigなしだとUTF-8（WPFプロジェクトはBOM付き）のCRLFになる。
+[*.{csproj,esproj}]
+end_of_line = crlf
+indent_size = 2
+
+# PowerShellファイル
+[*.{ps1,psd1,psm1}]
+charset = utf-8-bom
+
+# XMLファイル
+[*.{props,targets,ruleset,config,pubxml}]
+indent_size = 2
+
+# JSONファイル
+[*.json]
+indent_size = 2
+
+# YAMLファイル
+[*.yml]
+indent_size = 2
+
+# HTML, CSS, SCSSファイル
+[*.{html,css,scss}]
+indent_size = 2
+
+# Markdownファイル
+[*.md]
+trim_trailing_whitespace = false
+
+# C# 生成コード
+[{*Generated,**/Generated/**}.cs]
+generated_code = true
+
+# XamlStyler
+[Settings.XamlStyler]
+indent_size = 2

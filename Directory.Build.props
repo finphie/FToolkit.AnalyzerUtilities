@@ -1,0 +1,49 @@
+<Project>
+
+  <PropertyGroup>
+    <LangVersion>preview</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <IsPackable>false</IsPackable>
+    <IsPublishable>false</IsPublishable>
+    <AccelerateBuildsInVisualStudio>true</AccelerateBuildsInVisualStudio>
+  </PropertyGroup>
+
+  <!-- 成果物の出力レイアウト -->
+  <PropertyGroup>
+    <UseArtifactsOutput>true</UseArtifactsOutput>
+    <ArtifactsPath>$(MSBuildThisFileDirectory)artifacts</ArtifactsPath>
+  </PropertyGroup>
+
+  <!-- XMLドキュメントファイル関連 -->
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+
+    <!-- 発行時はファイルを出力しない。 -->
+    <PublishDocumentationFiles>false</PublishDocumentationFiles>
+  </PropertyGroup>
+
+  <!-- ディレクトリ関連変数の定義 -->
+  <PropertyGroup>
+    <BuildDirectory>$(MSBuildThisFileDirectory)Build/</BuildDirectory>
+    <BuildCommonDirectory>$(BuildDirectory)Common/</BuildCommonDirectory>
+    <BuildCommonAnalyzersDirectory>$(BuildCommonDirectory)Analyzers/</BuildCommonAnalyzersDirectory>
+    <BuildCommonPackDirectory>$(BuildCommonDirectory)Pack/</BuildCommonPackDirectory>
+    <BuildCommonPublishDirectory>$(BuildCommonDirectory)Publish/</BuildCommonPublishDirectory>
+    <BuildCommonPlatformDirectory>$(BuildCommonDirectory)Platform/</BuildCommonPlatformDirectory>
+    <SourceDirectory>$(MSBuildThisFileDirectory)Source/</SourceDirectory>
+  </PropertyGroup>
+
+  <!-- バージョン関連変数の定義 -->
+  <PropertyGroup Condition="'$(Version)' != ''">
+    <MajorVersion>$([System.String]::Format("{0}", $([System.Version]::Parse("$(Version)").Major)))</MajorVersion>
+    <MinorVersion>$([System.String]::Format("{0:D2}", $([System.Version]::Parse("$(Version)").Minor)))</MinorVersion>
+    <BuildVersion>$([System.String]::Format("{0:D3}", $([System.Version]::Parse("$(Version)").Build)))</BuildVersion>
+  </PropertyGroup>
+
+  <Import Project="$(BuildCommonAnalyzersDirectory)Analyzers.props" />
+  <Import Project="$(BuildCommonPlatformDirectory)Metadata.props" />
+  <Import Project="$(BuildCommonPlatformDirectory)Resource.props" />
+
+</Project>

@@ -1,0 +1,17 @@
+<Project>
+  <!-- ソースジェネレーター関連の設定 -->
+
+  <PropertyGroup>
+    <_IsGeneratorInternal>$(MSBuildProjectName.EndsWith('.Generator.Internal'))</_IsGeneratorInternal>
+    <_MainLogicProjectName Condition="'$(_IsGeneratorInternal)' != 'true'">$(MSBuildProjectName.Substring(0, $(MSBuildProjectName.LastIndexOf('.Generator'))))</_MainLogicProjectName>
+    <_MainLogicProjectName Condition="'$(_IsGeneratorInternal)' == 'true'">$(MSBuildProjectName.Substring(0, $(MSBuildProjectName.LastIndexOf('.Generator.Internal'))))</_MainLogicProjectName>
+
+    <MainLogicProjectPath>$(SourceDirectory)$(_MainLogicProjectName)/$(_MainLogicProjectName).csproj</MainLogicProjectPath>
+    <MainLogicAssemblyPath>$(ArtifactsPath)/bin/$(_MainLogicProjectName)/$(Configuration)/$(_MainLogicProjectName).dll</MainLogicAssemblyPath>
+    <ExistsSourceGeneratorMainLogic Condition="Exists('$(MainLogicProjectPath)')">true</ExistsSourceGeneratorMainLogic>
+  </PropertyGroup>
+
+  <Import Condition="'$(_IsGeneratorInternal)' != 'true'" Project="$(_BuildCommonPlatformLibraryDirectory)Generator.Package.targets" />
+  <Import Condition="'$(_IsGeneratorInternal)' == 'true'" Project="$(_BuildCommonPlatformLibraryDirectory)Generator.Internal.targets" />
+
+</Project>

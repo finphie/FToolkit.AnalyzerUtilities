@@ -1,0 +1,26 @@
+name: Build(.NET)
+
+on:
+  pull_request:
+    paths:
+      - '**/*.cs'
+      - '**/*.tt'
+      - '**/*.xaml'
+      - '**/*.axaml'
+      - '**/*.razor'
+      - '**/*.cshtml'
+      - '**/*.csproj'
+      - '**/*.sln'
+      - '**/*.slnx'
+      - '**/*.props'
+      - '**/*.targets'
+      - '**/.editorconfig'
+      - '**/.globalconfig'
+
+permissions: {}
+
+jobs:
+  main:
+    name: Main
+    uses: finphie/Actions/.github/workflows/build-dotnet.yml@main
+    permissions: {}

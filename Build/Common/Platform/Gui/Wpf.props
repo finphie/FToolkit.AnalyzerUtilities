@@ -1,0 +1,11 @@
+<Project>
+  <!-- WPF関連の設定 -->
+
+  <PropertyGroup>
+    <IsPublishable>true</IsPublishable>
+    <PublishMode>ReadyToRunNoTrimming</PublishMode>
+  </PropertyGroup>
+
+  <Import Project="$(BuildCommonPublishDirectory)Publish.props" />
+
+</Project>

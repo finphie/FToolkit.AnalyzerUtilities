@@ -1,0 +1,27 @@
+# Visual Studio
+.vs/
+bin/
+obj/
+*.user
+artifacts/
+
+# MSBuild log
+*.binlog
+
+# .NET
+BenchmarkDotNet.Artifacts/
+
+# Unity
+/Assets/*
+/Library/
+/Logs/
+/Temp/
+!/Assets/Finphie/
+!/Assets/*.meta
+Assembly-CSharp*.csproj
+
+# Package File
+*.zip
+
+# JavaScript
+node_modules/
