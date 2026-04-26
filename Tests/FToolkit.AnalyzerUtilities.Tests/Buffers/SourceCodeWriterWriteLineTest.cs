@@ -1,4 +1,5 @@
 ﻿using FToolkit.AnalyzerUtilities.Buffers;
+using Microsoft.VisualBasic;
 using Shouldly;
 using Xunit;
 
@@ -39,10 +40,7 @@ public sealed class SourceCodeWriterWriteLineTest
         writer.WriteLine();
 
         writer.WrittenSpan.ToString()
-            .ShouldBe("""
-
-
-                """);
+            .ShouldBe("\r\n");
     }
 
     [Fact]
@@ -58,5 +56,38 @@ public sealed class SourceCodeWriterWriteLineTest
                 x:class A
 
                 """);
+    }
+
+    [Fact]
+    public void IFormattable以外()
+    {
+        using var writer = new SourceCodeWriter();
+        writer.WriteLine($"{(1, 2)}");
+
+        writer.WrittenSpan.ToString()
+            .ShouldBe("""
+                (1, 2)
+            
+                """);
+    }
+
+    [Fact]
+    public void Null()
+    {
+        using var writer = new SourceCodeWriter();
+        writer.WriteLine($"{(string?)null}");
+
+        writer.WrittenSpan.ToString()
+            .ShouldBe("\r\n");
+    }
+
+    [Fact]
+    public void 空文字()
+    {
+        using var writer = new SourceCodeWriter();
+        writer.WriteLine($"{string.Empty}");
+
+        writer.WrittenSpan.ToString()
+            .ShouldBe("\r\n");
     }
 }

@@ -32,16 +32,18 @@ public readonly ref struct SourceCodeWriterInterpolatedStringHandler
         => _writer.Write(value);
 
     /// <summary>
-    /// 文字列を追加します。
+    /// 値を文字列としてを追加します。
     /// </summary>
-    /// <param name="value">文字列</param>
-    public void AppendFormatted(string value)
-        => AppendLiteral(value);
+    /// <typeparam name="T">値の型</typeparam>
+    /// <param name="value">値</param>
+    public void AppendFormatted<T>(T value)
+    {
+        if (value is IFormattable formattableValue)
+        {
+            AppendLiteral(formattableValue.ToString(null, CultureInfo.InvariantCulture));
+            return;
+        }
 
-    /// <summary>
-    /// 文字列を追加します。
-    /// </summary>
-    /// <param name="value">文字列</param>
-    public void AppendFormatted(int value)
-        => AppendLiteral(value.ToString(CultureInfo.InvariantCulture));
+        AppendLiteral(value?.ToString()!);
+    }
 }
