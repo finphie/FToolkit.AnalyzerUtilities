@@ -6,7 +6,7 @@ namespace FToolkit.AnalyzerUtilities.Buffers;
 /// データを書き込むことができるクラスです。
 /// </summary>
 /// <typeparam name="T">書き込むデータの型</typeparam>
-sealed class ArrayPoolBufferWriter<T> : IBufferWriter<T>, IDisposable
+public sealed class ArrayPoolBufferWriter<T> : IBufferWriter<T>, IDisposable
 {
     const int DefaultInitialBufferSize = 1024;
 
@@ -34,6 +34,7 @@ sealed class ArrayPoolBufferWriter<T> : IBufferWriter<T>, IDisposable
     public void Advance(int count)
     {
         ArgumentOutOfRangeException.ThrowIfNegative(count);
+        ArgumentOutOfRangeException.ThrowIfGreaterThan(count, _array.Length - _index);
 
         _index += count;
     }
@@ -76,8 +77,7 @@ sealed class ArrayPoolBufferWriter<T> : IBufferWriter<T>, IDisposable
         var newSize = _index + sizeHint;
         var newArray = _pool.Rent(newSize);
 
-        var copyLength = Math.Min(_array.Length, newSize);
-        _array.AsSpan(0, copyLength).CopyTo(newArray);
+        _array.AsSpan(0, _index).CopyTo(newArray);
 
         _pool.Return(_array);
         _array = newArray;
