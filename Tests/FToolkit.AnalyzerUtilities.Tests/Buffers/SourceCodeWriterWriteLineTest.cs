@@ -2,7 +2,7 @@
 using Shouldly;
 using Xunit;
 
-namespace FToolkit.AnalyzerUtilities.Tests;
+namespace FToolkit.AnalyzerUtilities.Tests.Buffers;
 
 public sealed class SourceCodeWriterWriteLineTest
 {
