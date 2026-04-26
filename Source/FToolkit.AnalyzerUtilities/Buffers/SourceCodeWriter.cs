@@ -1,5 +1,6 @@
 ﻿using System.Buffers;
 using System.Runtime.CompilerServices;
+using FToolkit.AnalyzerUtilities.Extensions;
 
 namespace FToolkit.AnalyzerUtilities.Buffers;
 
@@ -21,10 +22,6 @@ public sealed class SourceCodeWriter : IDisposable
     /// </summary>
     public ReadOnlySpan<char> WrittenSpan => _bufferWriter.WrittenSpan;
 
-    static ReadOnlySpan<char> DefaultNewLine => "\r\n".AsSpan();
-
-    static ReadOnlySpan<char> OpenBlock => "{".AsSpan();
-
     ReadOnlySpan<char> CurrentIndentation => _indentations[_currentIndentationLevel];
 
     /// <inheritdoc/>
@@ -32,34 +29,28 @@ public sealed class SourceCodeWriter : IDisposable
         => _bufferWriter.Dispose();
 
     /// <summary>
-    /// インデントを増やします。
+    /// インデントします。
     /// </summary>
-    public void IncreaseIndent()
+    /// <returns>インデントを戻すための<see cref="IDisposable"/>を実装したオブジェクトを返します。</returns>
+    /// <exception cref="InvalidOperationException">現在のソースコード末尾が改行で終わっていない場合にスローします。</exception>
+    public SourceCodeWriterIndent Indent()
     {
-        if (++_currentIndentationLevel != _indentations.Count)
-        {
-            return;
-        }
+        InvalidOperationException.ThrowIfNotEndWithNewLine(WrittenSpan);
 
-        var newIndentation = new char[_indentations[^1].Length + IndentSize];
-        newIndentation.AsSpan().Fill(Space);
-
-        _indentations.Add(newIndentation);
+        IncreaseIndent();
+        return new SourceCodeWriterIndent(this);
     }
-
-    /// <summary>
-    /// インデントを減らします。
-    /// </summary>
-    public void DecreaseIndent()
-        => _currentIndentationLevel--;
 
     /// <summary>
     /// ブロックを書き込みます。
     /// </summary>
-    /// <returns>開いているブロックを閉じるために、<see cref="IDisposable"/>を実装した型のインスタンスを返します。</returns>
+    /// <returns>開いているブロックを閉じるための<see cref="IDisposable"/>を実装したオブジェクトを返します。</returns>
+    /// <exception cref="InvalidOperationException">現在のソースコード末尾が改行で終わっていない場合にスローします。</exception>
     public SourceCodeWriterBlock WriteBlock()
     {
-        WriteLine(OpenBlock);
+        InvalidOperationException.ThrowIfNotEndWithNewLine(WrittenSpan);
+
+        WriteLine(Constants.OpenBlock);
         IncreaseIndent();
 
         return new(this);
@@ -69,7 +60,7 @@ public sealed class SourceCodeWriter : IDisposable
     /// 改行を書き込みます。
     /// </summary>
     public void WriteLine()
-        => _bufferWriter.Write(DefaultNewLine);
+        => _bufferWriter.Write(Constants.DefaultNewLine);
 
     /// <summary>
     /// 文字列を書き込みます。
@@ -95,16 +86,9 @@ public sealed class SourceCodeWriter : IDisposable
     /// 文字列を書き込みます。
     /// </summary>
     /// <param name="text">文字列</param>
-    public void WriteLine(string text)
-        => WriteLine(text.AsSpan());
-
-    /// <summary>
-    /// 文字列を書き込みます。
-    /// </summary>
-    /// <param name="text">文字列</param>
     public void Write(ReadOnlySpan<char> text)
     {
-        if (_bufferWriter.WrittenSpan.EndsWith(DefaultNewLine))
+        if (_bufferWriter.WrittenSpan.EndsWith(Constants.DefaultNewLine))
         {
             _bufferWriter.Write(CurrentIndentation);
         }
@@ -123,9 +107,23 @@ public sealed class SourceCodeWriter : IDisposable
     }
 
     /// <summary>
-    /// 文字列を書き込みます。
+    /// インデントを増やします。
     /// </summary>
-    /// <param name="text">文字列</param>
-    public void Write(string text)
-        => Write(text.AsSpan());
+    internal void IncreaseIndent()
+    {
+        if (++_currentIndentationLevel != _indentations.Count)
+        {
+            return;
+        }
+
+        var newIndentation = new char[_indentations[^1].Length + IndentSize];
+        newIndentation.AsSpan().Fill(Space);
+
+        _indentations.Add(newIndentation);
+    }
+
+    /// <summary>
+    /// インデントを減らします。
+    /// </summary>
+    internal void DecreaseIndent() => _currentIndentationLevel--;
 }

@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/Source/">
+    <Project Path="Source/FToolkit.AnalyzerUtilities/FToolkit.AnalyzerUtilities.csproj" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="Tests/FToolkit.AnalyzerUtilities.Tests/FToolkit.AnalyzerUtilities.Tests.csproj" />
+  </Folder>
+</Solution>

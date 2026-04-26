@@ -3,18 +3,18 @@
 namespace FToolkit.AnalyzerUtilities.Buffers;
 
 /// <summary>
-/// ソースコードのブロックを表します。
+/// ソースコードのインデントを表します。
 /// </summary>
-public readonly ref struct SourceCodeWriterBlock : IDisposable
+public readonly ref struct SourceCodeWriterIndent : IDisposable
 {
     readonly SourceCodeWriter _writer;
 
     /// <summary>
-    /// <see cref="SourceCodeWriterBlock"/>構造体の新しいインスタンスを作成します。
+    /// <see cref="SourceCodeWriterIndent"/>構造体の新しいインスタンスを作成します。
     /// </summary>
     /// <param name="writer">ソースコードを書き込むクラスのインスタンス</param>
     /// <exception cref="ArgumentNullException"><paramref name="writer"/>が<see langword="null"/>です。</exception>
-    public SourceCodeWriterBlock(SourceCodeWriter writer)
+    public SourceCodeWriterIndent(SourceCodeWriter writer)
     {
         ArgumentNullException.ThrowIfNull(writer);
         _writer = writer;
@@ -24,8 +24,6 @@ public readonly ref struct SourceCodeWriterBlock : IDisposable
     public void Dispose()
     {
         InvalidOperationException.ThrowIfNotEndWithNewLine(_writer.WrittenSpan);
-
         _writer.DecreaseIndent();
-        _writer.WriteLine(Constants.CloseBlock);
     }
 }
