@@ -10,7 +10,7 @@ public readonly ref struct SourceCodeWriterBlock : IDisposable
     readonly SourceCodeWriter _writer;
 
     /// <summary>
-    /// <see cref="SourceCodeWriterBlock"/>構造体の新しいインスタンスを作成します。
+    /// <see cref="SourceCodeWriterBlock"/>構造体の新しいインスタンスを初期化します。
     /// </summary>
     /// <param name="writer">ソースコードを書き込むクラスのインスタンス</param>
     /// <exception cref="ArgumentNullException"><paramref name="writer"/>が<see langword="null"/>です。</exception>

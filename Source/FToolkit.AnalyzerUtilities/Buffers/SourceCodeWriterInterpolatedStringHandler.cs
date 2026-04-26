@@ -12,7 +12,7 @@ public readonly ref struct SourceCodeWriterInterpolatedStringHandler
     readonly SourceCodeWriter _writer;
 
     /// <summary>
-    /// <see cref="SourceCodeWriterInterpolatedStringHandler"/>の新しいインスタンスを生成します。
+    /// <see cref="SourceCodeWriterInterpolatedStringHandler"/>の新しいインスタンスを初期化します。
     /// </summary>
     /// <param name="literalLength">定数文字の数</param>
     /// <param name="formattedCount">補間式の数</param>
