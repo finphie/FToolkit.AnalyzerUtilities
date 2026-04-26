@@ -43,5 +43,5 @@ public readonly ref struct SourceCodeWriterInterpolatedStringHandler
     /// </summary>
     /// <param name="value">文字列</param>
     public void AppendFormatted(int value)
-         => AppendLiteral(value.ToString(CultureInfo.InvariantCulture));
+        => AppendLiteral(value.ToString(CultureInfo.InvariantCulture));
 }
