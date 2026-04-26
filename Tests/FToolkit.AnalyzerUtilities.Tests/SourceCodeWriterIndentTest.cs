@@ -51,6 +51,55 @@ public sealed class SourceCodeWriterIndentTest
     }
 
     [Fact]
+    public void インデント6つ()
+    {
+        using var writer = new SourceCodeWriter();
+        writer.WriteLine("value1");
+
+        using (writer.Indent())
+        {
+            writer.WriteLine("value2");
+
+            using (writer.Indent())
+            {
+                writer.WriteLine("value3");
+
+                using (writer.Indent())
+                {
+                    writer.WriteLine("value4");
+
+                    using (writer.Indent())
+                    {
+                        writer.WriteLine("value5");
+
+                        using (writer.Indent())
+                        {
+                            writer.WriteLine("value6");
+
+                            using (writer.Indent())
+                            {
+                                writer.WriteLine("value7");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        writer.WrittenSpan.ToString()
+            .ShouldBe("""
+                value1
+                    value2
+                        value3
+                            value4
+                                value5
+                                    value6
+                                        value7
+
+                """);
+    }
+
+    [Fact]
     public void インデント開始位置が行頭_InvalidOperationException()
     {
         using var writer = new SourceCodeWriter();

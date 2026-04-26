@@ -9,20 +9,33 @@ namespace FToolkit.AnalyzerUtilities.Buffers;
 /// </summary>
 public sealed class SourceCodeWriter : IDisposable
 {
-    const char Space = ' ';
     const int IndentSize = 4;
+    const char Space = ' ';
 
     readonly ArrayPoolBufferWriter<char> _bufferWriter = new();
-    readonly List<char[]> _indentations = [[]];
 
+    char[] _indentBuffer = new char[IndentSize * 5];
     int _currentIndentationLevel;
+
+    /// <summary>
+    /// <see cref="SourceCodeWriter"/>クラスの新しいインスタンスを初期化します。
+    /// </summary>
+    public SourceCodeWriter()
+        => Array.Fill(_indentBuffer, Space);
 
     /// <summary>
     /// 書き込み済みのバッファを取得します。
     /// </summary>
     public ReadOnlySpan<char> WrittenSpan => _bufferWriter.WrittenSpan;
 
-    ReadOnlySpan<char> CurrentIndentation => _indentations[_currentIndentationLevel];
+    ReadOnlySpan<char> CurrentIndentation
+    {
+        get
+        {
+            var length = _currentIndentationLevel * IndentSize;
+            return _indentBuffer.AsSpan(0, length);
+        }
+    }
 
     /// <inheritdoc/>
     public void Dispose()
@@ -111,15 +124,18 @@ public sealed class SourceCodeWriter : IDisposable
     /// </summary>
     internal void IncreaseIndent()
     {
-        if (++_currentIndentationLevel != _indentations.Count)
+        var needed = ++_currentIndentationLevel * IndentSize;
+
+        if (_indentBuffer.Length >= needed)
         {
             return;
         }
 
-        var newIndentation = new char[_indentations[^1].Length + IndentSize];
-        newIndentation.AsSpan().Fill(Space);
+        var oldLength = _indentBuffer.Length;
+        var newSize = Math.Max(oldLength * 2, needed);
+        Array.Resize(ref _indentBuffer, newSize);
 
-        _indentations.Add(newIndentation);
+        Array.Fill(_indentBuffer, Space, oldLength, _indentBuffer.Length - oldLength);
     }
 
     /// <summary>
