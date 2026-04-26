@@ -14,7 +14,7 @@ public readonly ref struct SourceCodeWriterBlock : IDisposable
     /// </summary>
     /// <param name="writer">ソースコードを書き込むクラスのインスタンス</param>
     /// <exception cref="ArgumentNullException"><paramref name="writer"/>が<see langword="null"/>です。</exception>
-    public SourceCodeWriterBlock(SourceCodeWriter writer)
+    internal SourceCodeWriterBlock(SourceCodeWriter writer)
     {
         ArgumentNullException.ThrowIfNull(writer);
         _writer = writer;
