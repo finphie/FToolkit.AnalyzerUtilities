@@ -1,5 +1,4 @@
 ﻿using FToolkit.AnalyzerUtilities.Buffers;
-using Microsoft.VisualBasic;
 using Shouldly;
 using Xunit;
 
