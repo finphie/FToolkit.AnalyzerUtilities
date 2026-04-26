@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Configuration/">
+    <File Path="version.json" />
+  </Folder>
   <Folder Name="/Source/">
     <Project Path="Source/FToolkit.AnalyzerUtilities/FToolkit.AnalyzerUtilities.csproj" />
   </Folder>

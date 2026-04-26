@@ -1,4 +1,4 @@
-# FToolkit
+# FToolkit.AnalyzerUtilities
 
 アナライザー関連のユーティリティライブラリです。
 
