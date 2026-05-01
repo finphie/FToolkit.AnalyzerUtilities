@@ -1,13 +1,11 @@
 ﻿using FToolkit.AnalyzerUtilities.Buffers;
-using Shouldly;
-using Xunit;
 
 namespace FToolkit.AnalyzerUtilities.Tests.Buffers;
 
 public sealed class SourceCodeWriterWriteBlockTest
 {
-    [Fact]
-    public void ブロック1つ()
+    [Test]
+    public async Task ブロック1つ()
     {
         using var writer = new SourceCodeWriter();
         writer.WriteLine("value1");
@@ -17,8 +15,8 @@ public sealed class SourceCodeWriterWriteBlockTest
             writer.WriteLine("value2");
         }
 
-        writer.WrittenSpan.ToString()
-            .ShouldBe("""
+        await Assert.That(writer.ToString())
+            .IsEqualTo("""
                 value1
                 {
                     value2
@@ -27,8 +25,8 @@ public sealed class SourceCodeWriterWriteBlockTest
                 """);
     }
 
-    [Fact]
-    public void ブロック2つ()
+    [Test]
+    public async Task ブロック2つ()
     {
         using var writer = new SourceCodeWriter();
         writer.WriteLine("value1");
@@ -43,8 +41,8 @@ public sealed class SourceCodeWriterWriteBlockTest
             }
         }
 
-        writer.WrittenSpan.ToString()
-            .ShouldBe("""
+        await Assert.That(writer.ToString())
+            .IsEqualTo("""
                 value1
                 {
                     value2
@@ -56,35 +54,39 @@ public sealed class SourceCodeWriterWriteBlockTest
                 """);
     }
 
-    [Fact]
-    public void ブロック開始位置が行頭_InvalidOperationException()
+    [Test]
+    public async Task ブロック開始位置が行頭_InvalidOperationException()
     {
         using var writer = new SourceCodeWriter();
 
-        Should.Throw<InvalidOperationException>(() => writer.WriteBlock());
+        await Assert.That(() => writer.WriteBlock())
+            .ThrowsExactly<InvalidOperationException>();
     }
 
-    [Fact]
-    public void ブロック開始位置が改行以外_InvalidOperationException()
+    [Test]
+    public async Task ブロック開始位置が改行以外_InvalidOperationException()
     {
         using var writer = new SourceCodeWriter();
         writer.Write("value");
 
-        Should.Throw<InvalidOperationException>(() => writer.WriteBlock());
+        await Assert.That(() => writer.WriteBlock())
+            .ThrowsExactly<InvalidOperationException>();
     }
 
-    [Fact]
-    public void ブロック終了位置が改行以外_InvalidOperationException()
+    [Test]
+    public async Task ブロック終了位置が改行以外_InvalidOperationException()
     {
         using var writer = new SourceCodeWriter();
         writer.WriteLine("value1");
 
-        Should.Throw<InvalidOperationException>(() =>
+        var action = () =>
         {
             using (writer.WriteBlock())
             {
                 writer.Write("value2");
             }
-        });
+        };
+        await Assert.That(action)
+            .ThrowsExactly<InvalidOperationException>();
     }
 }

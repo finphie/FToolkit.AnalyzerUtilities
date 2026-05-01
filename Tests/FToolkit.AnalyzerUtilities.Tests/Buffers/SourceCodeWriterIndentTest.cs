@@ -1,13 +1,11 @@
 ﻿using FToolkit.AnalyzerUtilities.Buffers;
-using Shouldly;
-using Xunit;
 
 namespace FToolkit.AnalyzerUtilities.Tests.Buffers;
 
 public sealed class SourceCodeWriterIndentTest
 {
-    [Fact]
-    public void インデント1つ()
+    [Test]
+    public async Task インデント1つ()
     {
         using var writer = new SourceCodeWriter();
         writer.WriteLine("value1");
@@ -17,16 +15,16 @@ public sealed class SourceCodeWriterIndentTest
             writer.WriteLine("value2");
         }
 
-        writer.WrittenSpan.ToString()
-            .ShouldBe("""
+        await Assert.That(writer.ToString())
+            .IsEqualTo("""
                 value1
                     value2
 
                 """);
     }
 
-    [Fact]
-    public void インデント2つ()
+    [Test]
+    public async Task インデント2つ()
     {
         using var writer = new SourceCodeWriter();
         writer.WriteLine("value1");
@@ -41,8 +39,8 @@ public sealed class SourceCodeWriterIndentTest
             }
         }
 
-        writer.WrittenSpan.ToString()
-            .ShouldBe("""
+        await Assert.That(writer.ToString())
+            .IsEqualTo("""
                 value1
                     value2
                         value3
@@ -50,8 +48,8 @@ public sealed class SourceCodeWriterIndentTest
                 """);
     }
 
-    [Fact]
-    public void インデント6つ()
+    [Test]
+    public async Task インデント6つ()
     {
         using var writer = new SourceCodeWriter();
         writer.WriteLine("value1");
@@ -86,8 +84,8 @@ public sealed class SourceCodeWriterIndentTest
             }
         }
 
-        writer.WrittenSpan.ToString()
-            .ShouldBe("""
+        await Assert.That(writer.ToString())
+            .IsEqualTo("""
                 value1
                     value2
                         value3
@@ -99,35 +97,39 @@ public sealed class SourceCodeWriterIndentTest
                 """);
     }
 
-    [Fact]
-    public void インデント開始位置が行頭_InvalidOperationException()
+    [Test]
+    public async Task インデント開始位置が行頭_InvalidOperationException()
     {
         using var writer = new SourceCodeWriter();
 
-        Should.Throw<InvalidOperationException>(() => writer.Indent());
+        await Assert.That(() => writer.Indent())
+            .ThrowsExactly<InvalidOperationException>();
     }
 
-    [Fact]
-    public void インデント開始位置が改行以外_InvalidOperationException()
+    [Test]
+    public async Task インデント開始位置が改行以外_InvalidOperationException()
     {
         using var writer = new SourceCodeWriter();
         writer.Write("value");
 
-        Should.Throw<InvalidOperationException>(() => writer.Indent());
+        await Assert.That(() => writer.Indent())
+            .ThrowsExactly<InvalidOperationException>();
     }
 
-    [Fact]
-    public void インデント終了位置が改行以外_InvalidOperationException()
+    [Test]
+    public async Task インデント終了位置が改行以外_InvalidOperationException()
     {
         using var writer = new SourceCodeWriter();
         writer.WriteLine("value1");
 
-        Should.Throw<InvalidOperationException>(() =>
+        var action = () =>
         {
             using (writer.Indent())
             {
                 writer.Write("value2");
             }
-        });
+        };
+        await Assert.That(action)
+            .ThrowsExactly<InvalidOperationException>();
     }
 }

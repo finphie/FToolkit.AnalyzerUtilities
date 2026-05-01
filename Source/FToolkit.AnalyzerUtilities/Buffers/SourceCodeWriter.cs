@@ -24,7 +24,7 @@ public sealed class SourceCodeWriter : IDisposable
         => Array.Fill(_indentBuffer, Space);
 
     /// <summary>
-    /// 書き込み済みのバッファを取得します。
+    /// 書き込み済みのバッファーを取得します。
     /// </summary>
     public ReadOnlySpan<char> WrittenSpan => _bufferWriter.WrittenSpan;
 
@@ -36,6 +36,10 @@ public sealed class SourceCodeWriter : IDisposable
             return _indentBuffer.AsSpan(0, length);
         }
     }
+
+    /// <inheritdoc/>
+    public override string ToString()
+        => WrittenSpan.ToString();
 
     /// <inheritdoc/>
     public void Dispose()
