@@ -1,21 +1,20 @@
 ﻿using FToolkit.AnalyzerUtilities.Buffers;
-using Shouldly;
-using Xunit;
 
 namespace FToolkit.AnalyzerUtilities.Tests.Buffers;
 
 public sealed class ArrayPoolBufferWriterWrittenSpanTest
 {
-    [Fact]
-    public void 初期状態が空()
+    [Test]
+    public async Task 初期状態が空()
     {
         using var writer = new ArrayPoolBufferWriter<byte>();
 
-        writer.WrittenSpan.Length.ShouldBe(0);
+        await Assert.That(writer.WrittenSpan.Length)
+            .IsZero();
     }
 
-    [Fact]
-    public void 複数回書き込み_WrittenSpanが正しい()
+    [Test]
+    public async Task 複数回書き込み_WrittenSpanが正しい()
     {
         using var writer = new ArrayPoolBufferWriter<int>();
 
@@ -29,10 +28,15 @@ public sealed class ArrayPoolBufferWriterWrittenSpanTest
         span2[1] = 4;
         writer.Advance(2);
 
-        writer.WrittenSpan.Length.ShouldBe(4);
-        writer.WrittenSpan[0].ShouldBe(1);
-        writer.WrittenSpan[1].ShouldBe(2);
-        writer.WrittenSpan[2].ShouldBe(3);
-        writer.WrittenSpan[3].ShouldBe(4);
+        await Assert.That(writer.WrittenSpan.Length)
+            .IsEqualTo(4);
+        await Assert.That(writer.WrittenSpan[0])
+            .IsEqualTo(1);
+        await Assert.That(writer.WrittenSpan[1])
+            .IsEqualTo(2);
+        await Assert.That(writer.WrittenSpan[2])
+            .IsEqualTo(3);
+        await Assert.That(writer.WrittenSpan[3])
+            .IsEqualTo(4);
     }
 }

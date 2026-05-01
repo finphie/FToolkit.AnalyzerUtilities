@@ -30,13 +30,11 @@ MIT
 
 ## クレジット
 
-このプロジェクトでは、次のライブラリ等を使用しています。
+このプロジェクトでは、次のパッケージ等を使用しています。
 
 ### テスト
 
-- [Microsoft.Testing.Extensions.CodeCoverage](https://github.com/microsoft/codecoverage)
-- [Shouldly](https://github.com/shouldly/shouldly)
-- [xunit.v3](https://github.com/xunit/xunit)
+- [TUnit](https://github.com/thomhurst/TUnit)
 
 ### アナライザー
 

@@ -25,7 +25,7 @@ public sealed class ArrayPoolBufferWriter<T> : IBufferWriter<T>, IDisposable
     }
 
     /// <summary>
-    /// 書き込み済みのバッファを取得します。
+    /// 書き込み済みのバッファーを取得します。
     /// </summary>
     public ReadOnlySpan<T> WrittenSpan
         => _array.AsSpan(0, _index);
